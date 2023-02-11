@@ -1,0 +1,19 @@
+.card__vector {
+    cursor: pointer;
+    background-image: url('../../../images/Vector_like.svg');
+    background-size: 22px 19px;
+    display: inline-block;
+    width: 22px;
+    height: 19px;
+    content: "";
+    padding-left: 1px;
+    background-repeat: no-repeat;
+}
+
+.card__vector:hover {
+    opacity: 0.5;
+}
+
+.card__vector.card__vector_active {
+    background-image: url('../../../images/Union.svg');
+}
