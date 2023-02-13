@@ -9,19 +9,19 @@
 
 <body class="root">
 <div class="popup">
-    <form class="popup__form-container popup__form-container_text">
-        <div class="popup__main-container">
-            <h2 class="popup__heading">Редактировать профиль</h2>
+    <div class="popup__container">
+        <button class="popup__close-icon popup__close-icon_action"></button>
+        <h2 class="popup__heading">Редактировать профиль</h2>
+        <form name="userCreationForm" class="popup__form-container">
             <fieldset class="popup__input-container">
-                <label class="popup__label" for="heading"></label>
-                <input type="text" class="popup__item popup__item_how-heading" id="heading" name="heading">
-                <label class="popup__label" for="subheading"></label>
-                <input type="text" class="popup__item popup__item_how-subheading" id="subheading" name="subheading">
+                <input type="text" class="popup__item popup__item_type_name" id="heading" name="heading"
+                       placeholder="Имя">
+                <input type="text" class="popup__item popup__item_type_job" id="subheading" name="subheading"
+                       placeholder="Вид деятельности">
             </fieldset>
-        </div>
-        <button type="submit" class="popup__button-save popup__button-save_action">Сохранить</button>
-        <span class="popup__close-icon popup__close-icon_action"></span>
-    </form>
+            <button class="popup__button-save popup__button-save_action">Сохранить</button>
+        </form>
+    </div>
 </div>
 <div class="page">
     <header class="header">
@@ -33,63 +33,63 @@
                 <img src="./images/Avatar.png" class="profile__avatar" alt="Фото Жак-Ив Кусто">
                 <div class="profile__wrapper">
                     <div class="profile__name-wrapper">
-                        <h2 class="profile__name profile__name_type">Жак-Ив Кусто</h2>
-                        <span class="profile__button-edit"></span>
+                        <h1 class="profile__name">Жак-Ив Кусто</h1>
+                        <button type="button" class="profile__button-edit"></button>
                     </div>
-                    <p class="profile__job profile__job_type">Исследователь океана</p>
+                    <p class="profile__job">Исследователь океана</p>
                 </div>
             </div>
-            <button class="profile__button-add"></button>
+            <button type="button" class="profile__button-add"></button>
         </section>
-        <section class="element" aria-label="Коллекция фотографий">
-            <div class="card">
+        <section class="element" aria-label="Коллекция карточек">
+            <article class="card">
                 <img src="./images/Karachaevsk.jpg" class="card__mask" alt="Фото Карачаевск">
                 <div class="card__wrapper">
                     <h2 class="card__name">Карачаевск</h2>
-                    <span class="card__vector"></span>
+                    <button type="button" class="card__vector"></button>
                 </div>
-            </div>
-            <div class="card">
+            </article>
+            <article class="card">
                 <img src="./images/Mountain_Elbrus.png" class="card__mask" alt="Фото горы Эльбрус">
                 <div class="card__wrapper">
                     <h2 class="card__name">Гора Эльбрус</h2>
-                    <span class="card__vector"></span>
+                    <button type="button" class="card__vector"></button>
                 </div>
-            </div>
-            <div class="card">
+            </article>
+            <article class="card">
                 <img src="./images/Dombay.png" class="card__mask" alt="Фото Домбай">
                 <div class="card__wrapper">
                     <h2 class="card__name">Домбай</h2>
-                    <span class="card__vector"></span>
+                    <button type="button" class="card__vector"></button>
                 </div>
-            </div>
-            <div class="card">
+            </article>
+            <article class="card">
                 <img src="./images/Mountain_Elbrus.png" class="card__mask" alt="Фото горы Эльбрус">
                 <div class="card__wrapper">
                     <h2 class="card__name">Гора Эльбрус</h2>
-                    <span class="card__vector"></span>
+                    <button type="button" class="card__vector"></button>
                 </div>
-            </div>
-            <div class="card">
+            </article>
+            <article class="card">
                 <img src="./images/Dombay.png" class="card__mask" alt="Фото Домбай">
                 <div class="card__wrapper">
                     <h2 class="card__name">Домбай</h2>
-                    <span class="card__vector"></span>
+                    <button type="button" class="card__vector"></button>
                 </div>
-            </div>
-            <div class="card">
+            </article>
+            <article class="card">
                 <img src="./images/Karachaevsk.jpg" class="card__mask" alt="Фото Карачаево-Черкесcк">
                 <div class="card__wrapper">
                     <h2 class="card__name">Карачаево-Черкесск</h2>
-                    <span class="card__vector"></span>
+                    <button type="button" class="card__vector"></button>
                 </div>
-            </div>
+            </article>
         </section>
     </main>
     <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
 </div>
-<script src="./js/index.js"></script>
+<script src="./scripts/index.js"></script>
 </body>
 </html>
