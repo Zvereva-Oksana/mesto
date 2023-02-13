@@ -3,7 +3,6 @@
     height: 50px;
     border: 2px solid #FFFFFF;
     border-radius: 2px;
-    background-color: black;
     cursor: pointer;
     background-image: url("../../../images/Vector_plus.svg");
     background-repeat: no-repeat;
@@ -11,6 +10,7 @@
     background-size: 22px 22px;
     padding: 0;
     box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .profile__button-add:hover {
@@ -26,5 +26,6 @@
 @media screen and (max-width: 360px) {
     .profile__button-add {
         width: 100%;
+        background-size: 16px 16px;
     }
 }

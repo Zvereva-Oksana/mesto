@@ -9,6 +9,7 @@
     line-height: 22px;
     text-align: center;
     margin-top: 48px;
+    margin-bottom: 37px;
     cursor: pointer;
     border: none;
 }
@@ -22,6 +23,7 @@
         width: 238px;
         height: 46px;
         margin-top: 45px;
+        margin-bottom: 25px;
         font-size: 14px;
         line-height: 17px;
     }

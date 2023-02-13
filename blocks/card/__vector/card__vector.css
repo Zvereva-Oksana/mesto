@@ -8,12 +8,10 @@
     content: "";
     padding-left: 1px;
     background-repeat: no-repeat;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .card__vector:hover {
     opacity: 0.5;
-}
-
-.card__vector.card__vector_active {
-    background-image: url('../../../images/Union.svg');
 }
