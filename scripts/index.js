@@ -1,5 +1,5 @@
 const openPopup = document.querySelector('.profile__button-edit');
-const closePopup = document.querySelector('.popup__close-icon_action');
+const closePopup = document.querySelector('.popup__close-icon');
 const modalWindowPopup = document.querySelector('.popup');
 const namePage = document.querySelector('.profile__name');
 const jobPage = document.querySelector('.profile__job');
