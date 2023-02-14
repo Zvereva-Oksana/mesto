@@ -18,6 +18,7 @@
 @import url(../blocks/card/__wrapper/card__wrapper.css);
 @import url(../blocks/card/__name/card__name.css);
 @import url(../blocks/card/__vector/card__vector.css);
+@import url(../blocks/card/__vector/_active/card__vector_active.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 @import url(../blocks/popup/popup.css);
