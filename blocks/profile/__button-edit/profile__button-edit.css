@@ -10,6 +10,7 @@
     box-sizing: border-box;
     display: flex;
     background-color: rgba(0, 0, 0, 0);
+    flex-shrink: 0;
 }
 
 .profile__button-edit:hover {
@@ -21,5 +22,6 @@
         width: 18px;
         height: 18px;
         background-size: 7.5px 7.5px;
+        margin-right: 19px;
     }
 }
