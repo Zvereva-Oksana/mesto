@@ -22,6 +22,11 @@
         width: 18px;
         height: 18px;
         background-size: 7.5px 7.5px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .profile__button-edit {
         margin-right: 19px;
     }
 }
