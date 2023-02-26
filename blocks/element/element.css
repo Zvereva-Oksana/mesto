@@ -7,6 +7,10 @@
     justify-content: center;
 }
 
+.element:last-child {
+    align-self: flex-start;
+}
+
 @media screen and (max-width: 710px) {
     .element {
         margin-top: 36px;
