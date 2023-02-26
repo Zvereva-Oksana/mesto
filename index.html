@@ -11,16 +11,23 @@
 <div class="popup">
     <div class="popup__container">
         <button type="button" class="popup__close-icon"></button>
-        <h2 class="popup__heading">Редактировать профиль</h2>
+        <h2 class="popup__heading"></h2>
         <form name="userCreationForm" class="popup__form-container">
             <fieldset class="popup__input-container">
-                <input type="text" class="popup__item popup__item_type_name" id="heading" name="heading"
-                       placeholder="Имя">
-                <input type="text" class="popup__item popup__item_type_job" id="subheading" name="subheading"
-                       placeholder="Вид деятельности">
+                <input type="text" class="popup__item popup__item_type_name" id="heading" name="heading">
+                <input type="text" class="popup__item popup__item_type_job" id="subheading" name="subheading">
             </fieldset>
-            <button type="submit" class="popup__button-save">Сохранить</button>
+            <button type="submit" class="popup__button-save"></button>
         </form>
+    </div>
+</div>
+<div class="picture-popup">
+    <div class="picture-popup__figure">
+        <div class="picture-popup__wrapper">
+            <img class="picture-popup__img" src="#" alt="">
+            <p class="picture-popup__figcaption"></p>
+            <button class="picture-popup__close-icon"></button>
+        </div>
     </div>
 </div>
 <div class="page">
@@ -42,54 +49,22 @@
             <button type="button" class="profile__button-add"></button>
         </section>
         <section class="element" aria-label="Коллекция карточек">
-            <article class="card">
-                <img src="./images/Karachaevsk.jpg" class="card__mask" alt="Фото Карачаевск">
-                <div class="card__wrapper">
-                    <h2 class="card__name">Карачаевск</h2>
-                    <button type="button" class="card__vector"></button>
+            <template class="templateCard">
+                <div class="card">
+                    <button type="button" class="card__delete"></button>
+                    <img class="card__mask" src="" alt="">
+                    <div class="card__wrapper">
+                        <h2 class="card__name"></h2>
+                        <button type="button" class="card__vector"></button>
+                    </div>
                 </div>
-            </article>
-            <article class="card">
-                <img src="./images/Mountain_Elbrus.png" class="card__mask" alt="Фото горы Эльбрус">
-                <div class="card__wrapper">
-                    <h2 class="card__name">Гора Эльбрус</h2>
-                    <button type="button" class="card__vector"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img src="./images/Dombay.png" class="card__mask" alt="Фото Домбай">
-                <div class="card__wrapper">
-                    <h2 class="card__name">Домбай</h2>
-                    <button type="button" class="card__vector"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img src="./images/Mountain_Elbrus.png" class="card__mask" alt="Фото горы Эльбрус">
-                <div class="card__wrapper">
-                    <h2 class="card__name">Гора Эльбрус</h2>
-                    <button type="button" class="card__vector"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img src="./images/Dombay.png" class="card__mask" alt="Фото Домбай">
-                <div class="card__wrapper">
-                    <h2 class="card__name">Домбай</h2>
-                    <button type="button" class="card__vector"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img src="./images/Karachaevsk.jpg" class="card__mask" alt="Фото Карачаево-Черкесcк">
-                <div class="card__wrapper">
-                    <h2 class="card__name">Карачаево-Черкесск</h2>
-                    <button type="button" class="card__vector"></button>
-                </div>
-            </article>
+            </template>
         </section>
     </main>
     <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
 </div>
-<script src="./scripts/index.js"></script>
+<script type="module" src="./scripts/index.js"></script>
 </body>
 </html>

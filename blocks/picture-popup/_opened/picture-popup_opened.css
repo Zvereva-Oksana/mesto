@@ -1,6 +1,6 @@
-.popup_opened {
-    z-index: 10;
+.picture-popup_opened {
     display: block;
+    z-index: 10;
     animation: appearance .5s;
 }
 

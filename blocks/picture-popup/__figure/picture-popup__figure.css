@@ -1,0 +1,15 @@
+.picture-popup__figure {
+    max-width: 75vw;
+    max-height: 75vh;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    object-fit: contain;
+    box-sizing: border-box;
+}
