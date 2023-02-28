@@ -1,5 +1,4 @@
 .popup {
-    display: none;
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -7,15 +6,7 @@
     top: 0;
     right: 0;
     background-color: rgba(0, 0, 0, .5);
-}
-
-.popup:not(.popup_opened).closing-delay {
-    display: block;
-    animation: disappearance .5s;
-    z-index: 10;
-}
-
-@keyframes disappearance {
-    from{opacity: 100%;}
-    to{opacity:0;}
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .4s linear;
 }

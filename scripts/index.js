@@ -1,111 +1,110 @@
-import {INITIAL_CARD, USER, PLACE, USER_FORM, PLACE_FORM} from './constants.js'
+import {initialCard} from './constants.js';
 
-const openPopup = document.querySelector('.profile__button-edit');
-const closePopup = document.querySelector('.popup__close-icon');
-const modalWindowPopup = document.querySelector('.popup');
-const namePage = document.querySelector('.profile__name');
-const jobPage = document.querySelector('.profile__job');
-const nameFormPopupInput = document.querySelector('.popup__item_type_name');
-const jobFormPopupInput = document.querySelector('.popup__item_type_job');
-const formElement = document.querySelector('.popup__form-container');
-const openPopupCard = document.querySelector('.profile__button-add');
-const headerPopup = document.querySelector('.popup__heading');
-const saveButton = document.querySelector('.popup__button-save');
-const openPicturePopup = document.querySelector('.picture-popup');
-const cardPage = document.querySelector('.element');
-const closePicturePopup = document.querySelector('.picture-popup__close-icon');
+const buttonEditProfile = document.querySelector('.profile__button-edit');
+const popupEditProfile = document.querySelector('.popup_edit-profile');
+const formPopupEditProfile = popupEditProfile.querySelector('.popup__form-container_edit-profile');
+const nameInputPopupProfile = formPopupEditProfile.querySelector('.popup__item_type_name');
+const jobInputPopupProfile = formPopupEditProfile.querySelector('.popup__item_type_job');
+const buttonCloseProfilePopup = popupEditProfile.querySelector('.popup__close-icon_edit-profile');
+const popupAddCard = document.querySelector('.popup_add-card');
+const buttonCloseCardPopup = popupAddCard.querySelector('.popup__close-icon_add-card');
+const nameProfile = document.querySelector('.profile__name');
+const jobProfile = document.querySelector('.profile__job');
+const formPopupAddCard = document.querySelector('.popup__form-container_add-card');
+const placeInputPopupAddCard = formPopupAddCard.querySelector('.popup__item_type_place');
+const linkInputPopupAddCard = formPopupAddCard.querySelector('.popup__item_type_link');
+const buttonOpenPopupAddCard = document.querySelector('.profile__button-add');
+const popupPicture = document.querySelector('.picture-popup');
+const buttonClosePopupPicture = popupPicture.querySelector('.picture-popup__close-icon');
+const imgPopup = popupPicture.querySelector('.picture-popup__img');
+const figcaptionPopup = popupPicture.querySelector('.picture-popup__figcaption');
+const cardViewport = document.querySelector('.element');
+const templateCard = cardViewport.querySelector('.template').content;
 
-const initializeModalWindow = (typeObject) => {
-    modalWindowPopup.classList.add('popup_opened');
-    nameFormPopupInput.value = typeObject === USER_FORM ? namePage.innerHTML : '';
-    jobFormPopupInput.value = typeObject === USER_FORM ? jobPage.innerHTML : '';
-    const obj = typeObject === USER_FORM ? USER : PLACE;
-    headerPopup.textContent = obj.header;
-    saveButton.textContent = obj.button;
-    nameFormPopupInput.setAttribute('placeholder', obj.name_placeholder);
-    jobFormPopupInput.setAttribute('placeholder', obj.job_placeholder);
+const controlModal = (element, classNameAdd, classNameRemove) => {
+    element.classList.add(classNameAdd);
+    element.classList.remove(classNameRemove);
 }
 
-const closeModalWindow = () => {
-    modalWindowPopup.classList.remove('popup_opened');
+const openPopupAddCard = () => {
+    controlModal(popupAddCard, 'popup_opened', 'popup_close');
+    placeInputPopupAddCard.value = '';
+    linkInputPopupAddCard.value = '';
 }
 
-const addingCardOnPage = (card) => {
-    const cardTemplate = document.querySelector('.templateCard').content.cloneNode(true);
-    const cardName = cardTemplate.querySelector('.card__name');
-    cardName.textContent = card.name;
-    const cardImage = cardTemplate.querySelector('.card__mask');
-    cardImage.setAttribute('src', card.link);
-    cardImage.setAttribute('alt', card.name);
-    cardPage.prepend(cardTemplate);
+const openPicturePopup = (event) => {
+    const srcSelectedImage = event.target.currentSrc;
+    imgPopup.setAttribute('src', srcSelectedImage);
+    controlModal(popupPicture, 'picture-popup_opened', 'picture-popup_close');
+    const cardTarget = event.target.closest('.card');
+    const nameImg = cardTarget.querySelector('.card__name');
+    figcaptionPopup.textContent = nameImg.innerHTML;
+    imgPopup.setAttribute('alt', nameImg.innerHTML);
+}
 
-    cardImage.addEventListener('click', (event) => {
-        const imgSrc = event.target.currentSrc;
-        const img = document.querySelector('.picture-popup__img')
-        img.setAttribute('src', imgSrc);
-        openPicturePopup.classList.add('picture-popup_opened');
-        const cardTarget = event.target.closest('.card');
-        const cardName = cardTarget.querySelector('.card__name').innerHTML;
-        const cardNamePopup = document.querySelector('.picture-popup__figcaption');
-        cardNamePopup.textContent = cardName;
+const renderInitialCards = (card) => {
+    const templateCardContent = templateCard.cloneNode(true);
+    const nameCard = templateCardContent.querySelector('.card__name');
+    nameCard.textContent = card.name;
+    const pictureCard = templateCardContent.querySelector('.card__mask');
+    pictureCard.setAttribute('src', card.link);
+    pictureCard.setAttribute('alt', card.name);
+    cardViewport.prepend(templateCardContent);
+
+    const buttonDeleteCardOnPage = cardViewport.querySelector('.card__delete');
+    buttonDeleteCardOnPage.addEventListener('click', (event) => {
+        event.target.closest('.card').remove();
     })
-
-    const buttonLike = cardPage.querySelector('.card__vector');
-    buttonLike.addEventListener('click', (event) => {
+    const buttonLikeCard = cardViewport.querySelector('.card__vector');
+    buttonLikeCard.addEventListener('click', (event) => {
         event.target.classList.toggle('card__vector_active');
     })
+    pictureCard.addEventListener('click', (event) => openPicturePopup(event));
 
-    const cardButtonDelete = cardPage.querySelector('.card__delete');
-    cardButtonDelete.addEventListener('click', (event) => {
-            event.target.closest('.card').remove();
-        }
-    )
+    buttonClosePopupPicture.addEventListener('click', () => {
+        controlModal(popupPicture, 'picture-popup_close', 'picture-popup_opened');
+    })
+
+    buttonOpenPopupAddCard.addEventListener('click', openPopupAddCard);
 }
 
-const closePictureModalWindow = () => {
-    openPicturePopup.classList.remove('picture-popup_opened');
-}
-
-const handleFormSubmit = (event) => {
+const addCard = (event) => {
     event.preventDefault();
-    saveButton.innerHTML === 'Сохранить' ? createUserFromForm() : addingNewCardToExistingOnes(event);
-    closeModalWindow();
+    const name = placeInputPopupAddCard.value;
+    const link = linkInputPopupAddCard.value;
+    const newCardOnPage = {name, link};
+    renderInitialCards(newCardOnPage);
+    controlModal(popupAddCard, 'popup_close', 'picture-popup_opened');
 }
 
-const createUserFromForm = () => {
-    namePage.textContent = nameFormPopupInput.value;
-    jobPage.textContent = jobFormPopupInput.value;
+const openPopupEditProfile = () => {
+    controlModal(popupEditProfile, 'popup_opened', 'popup_close');
+    nameInputPopupProfile.value = nameProfile.innerHTML;
+    jobInputPopupProfile.value = jobProfile.innerHTML;
 }
 
-const addingNewCardToExistingOnes = (event) => {
-    const name = event.target.querySelector('.popup__item_type_name').value;
-    const link = event.target.querySelector('.popup__item_type_job').value;
-    const card = {
-        link: link,
-        name: name,
-    }
-    addingCardOnPage(card);
+const submitEditProfileForm = (event) => {
+    event.preventDefault();
+    nameProfile.textContent = nameInputPopupProfile.value;
+    jobProfile.textContent = jobInputPopupProfile.value;
+    controlModal(popupEditProfile, 'popup_close', 'popup_opened');
 }
 
-openPopup.addEventListener('click', () => initializeModalWindow(USER_FORM));
-openPopupCard.addEventListener('click', () => initializeModalWindow(PLACE_FORM));
-closePopup.addEventListener('click', closeModalWindow);
-closePicturePopup.addEventListener('click', closePictureModalWindow);
-formElement.addEventListener('submit', handleFormSubmit);
+formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
 
-document.addEventListener('animationstart', function (e) {
-    if (e.animationName === 'appearance') {
-        e.target.classList.add('closing-delay');
-    }
-});
+buttonCloseProfilePopup.addEventListener('click', () => {
+    controlModal(popupEditProfile, 'popup_close', 'popup_opened');
+})
 
-document.addEventListener('animationend', function (e) {
-    if (e.animationName === 'disappearance') {
-        e.target.classList.remove('closing-delay');
-    }
-});
+buttonEditProfile.addEventListener('click', openPopupEditProfile);
+formPopupAddCard.addEventListener('submit', addCard);
+buttonCloseCardPopup.addEventListener('click', () => {
+    controlModal(popupAddCard, 'popup_close', 'popup_opened');
+})
 
-INITIAL_CARD.forEach((item) => addingCardOnPage(item));
+initialCard.forEach((item) => renderInitialCards(item));
+
+
 
 
 

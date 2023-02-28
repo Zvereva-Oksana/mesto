@@ -1,10 +1,5 @@
 .picture-popup_opened {
-    display: block;
     z-index: 10;
-    animation: appearance .5s;
-}
-
-@keyframes appearance {
-    from{opacity: 0;}
-    to{opacity:100%;}
+    visibility: visible;
+    opacity: 1;
 }

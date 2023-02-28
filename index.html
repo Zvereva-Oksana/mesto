@@ -8,16 +8,32 @@
 </head>
 
 <body class="root">
-<div class="popup">
+<div class="popup popup_edit-profile">
     <div class="popup__container">
-        <button type="button" class="popup__close-icon"></button>
-        <h2 class="popup__heading"></h2>
-        <form name="userCreationForm" class="popup__form-container">
+        <button type="button" class="popup__close-icon popup__close-icon_edit-profile"></button>
+        <h2 class="popup__heading">Редактировать профиль</h2>
+        <form name="userCreationForm" class="popup__form-container popup__form-container_edit-profile">
             <fieldset class="popup__input-container">
-                <input type="text" class="popup__item popup__item_type_name" id="heading" name="heading">
-                <input type="text" class="popup__item popup__item_type_job" id="subheading" name="subheading">
+                <input type="text" class="popup__item popup__item_type_name" id="name" name="name" placeholder="Имя">
+                <input type="text" class="popup__item popup__item_type_job" id="job" name="job"
+                       placeholder="Вид деятельности">
             </fieldset>
-            <button type="submit" class="popup__button-save"></button>
+            <button type="submit" class="popup__button-save">Сохранить</button>
+        </form>
+    </div>
+</div>
+<div class="popup popup_add-card">
+    <div class="popup__container">
+        <button type="button" class="popup__close-icon popup__close-icon_add-card"></button>
+        <h2 class="popup__heading">Новое место</h2>
+        <form name="userCreationForm" class="popup__form-container popup__form-container_add-card">
+            <fieldset class="popup__input-container">
+                <input type="text" class="popup__item popup__item_type_place" id="place" name="place"
+                       placeholder="Название">
+                <input type="text" class="popup__item popup__item_type_link" id="link" name="link"
+                       placeholder="Ссылка на картинку">
+            </fieldset>
+            <button type="submit" class="popup__button-save">Создать</button>
         </form>
     </div>
 </div>
@@ -49,7 +65,7 @@
             <button type="button" class="profile__button-add"></button>
         </section>
         <section class="element" aria-label="Коллекция карточек">
-            <template class="templateCard">
+            <template class="template">
                 <div class="card">
                     <button type="button" class="card__delete"></button>
                     <img class="card__mask" src="#" alt="">
