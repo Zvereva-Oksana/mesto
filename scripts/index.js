@@ -21,13 +21,26 @@ const figcaptionPopup = popupPicture.querySelector('.picture-popup__figcaption')
 const cardViewport = document.querySelector('.element');
 const templateCard = cardViewport.querySelector('.template').content;
 
-const controlModal = (element, classNameAdd, classNameRemove) => {
-    element.classList.add(classNameAdd);
-    element.classList.remove(classNameRemove);
+const openPopup = (popup) => {
+    popup.classList.add('popup_opened');
+}
+
+const closePopup = (popup) => {
+    popup.classList.remove('popup_opened');
+}
+
+const addAnimationOpenModal = (funk, element, classClosingDelay) => {
+    funk();
+    element.classList.remove(classClosingDelay);
+}
+
+const addAnimationCloseModal = (funk, element, classClosingDelay) => {
+    funk();
+    element.classList.add(classClosingDelay);
 }
 
 const openPopupAddCard = () => {
-    controlModal(popupAddCard, 'popup_opened', 'popup_close');
+    addAnimationOpenModal(() => openPopup(popupAddCard), popupAddCard, 'popup_closing-delay');
     placeInputPopupAddCard.value = '';
     linkInputPopupAddCard.value = '';
 }
@@ -35,7 +48,7 @@ const openPopupAddCard = () => {
 const openPicturePopup = (event) => {
     const srcSelectedImage = event.target.currentSrc;
     imgPopup.setAttribute('src', srcSelectedImage);
-    controlModal(popupPicture, 'picture-popup_opened', 'picture-popup_close');
+    addAnimationOpenModal(() => openPopup(popupPicture), popupPicture, 'popup_closing-delay');
     const cardTarget = event.target.closest('.card');
     const nameImg = cardTarget.querySelector('.card__name');
     figcaptionPopup.textContent = nameImg.innerHTML;
@@ -62,7 +75,7 @@ const renderInitialCards = (card) => {
     pictureCard.addEventListener('click', (event) => openPicturePopup(event));
 
     buttonClosePopupPicture.addEventListener('click', () => {
-        controlModal(popupPicture, 'picture-popup_close', 'picture-popup_opened');
+        addAnimationCloseModal(() => closePopup(popupPicture), popupPicture, 'popup_closing-delay');
     })
 
     buttonOpenPopupAddCard.addEventListener('click', openPopupAddCard);
@@ -74,11 +87,11 @@ const addCard = (event) => {
     const link = linkInputPopupAddCard.value;
     const newCardOnPage = {name, link};
     renderInitialCards(newCardOnPage);
-    controlModal(popupAddCard, 'popup_close', 'picture-popup_opened');
+    addAnimationCloseModal(() => closePopup(popupAddCard), popupAddCard, 'popup_closing-delay');
 }
 
 const openPopupEditProfile = () => {
-    controlModal(popupEditProfile, 'popup_opened', 'popup_close');
+    addAnimationOpenModal(() => openPopup(popupEditProfile), popupEditProfile, 'popup_closing-delay');
     nameInputPopupProfile.value = nameProfile.innerHTML;
     jobInputPopupProfile.value = jobProfile.innerHTML;
 }
@@ -87,19 +100,19 @@ const submitEditProfileForm = (event) => {
     event.preventDefault();
     nameProfile.textContent = nameInputPopupProfile.value;
     jobProfile.textContent = jobInputPopupProfile.value;
-    controlModal(popupEditProfile, 'popup_close', 'popup_opened');
+    addAnimationCloseModal(() => closePopup(popupEditProfile), popupEditProfile, 'popup_closing-delay');
 }
 
 formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
 
 buttonCloseProfilePopup.addEventListener('click', () => {
-    controlModal(popupEditProfile, 'popup_close', 'popup_opened');
+    addAnimationCloseModal(() => closePopup(popupEditProfile), popupEditProfile, 'popup_closing-delay');
 })
 
 buttonEditProfile.addEventListener('click', openPopupEditProfile);
 formPopupAddCard.addEventListener('submit', addCard);
 buttonCloseCardPopup.addEventListener('click', () => {
-    controlModal(popupAddCard, 'popup_close', 'popup_opened');
+    addAnimationCloseModal(() => closePopup(popupAddCard), popupAddCard, 'popup_closing-delay');
 })
 
 initialCard.forEach((item) => renderInitialCards(item));

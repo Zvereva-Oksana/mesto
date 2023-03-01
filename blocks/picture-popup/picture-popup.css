@@ -1,12 +1,6 @@
-.picture-popup {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    right: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity .5s linear;
+.picture-popup.popup_opened {
     background-color: rgba(0, 0, 0, .9);
+    z-index: 10;
+    visibility: visible;
+    opacity: 1;
 }
