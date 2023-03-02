@@ -29,69 +29,56 @@ const closePopup = (popup) => {
     popup.classList.remove('popup_opened');
 }
 
-const addAnimationOpenModal = (funk, element, classClosingDelay) => {
-    funk();
-    element.classList.remove(classClosingDelay);
-}
-
-const addAnimationCloseModal = (funk, element, classClosingDelay) => {
-    funk();
-    element.classList.add(classClosingDelay);
-}
-
 const openPopupAddCard = () => {
-    addAnimationOpenModal(() => openPopup(popupAddCard), popupAddCard, 'popup_closing-delay');
-    placeInputPopupAddCard.value = '';
-    linkInputPopupAddCard.value = '';
+    openPopup(popupAddCard);
+    formPopupAddCard.reset();
 }
 
 const openPicturePopup = (event) => {
     const srcSelectedImage = event.target.currentSrc;
     imgPopup.setAttribute('src', srcSelectedImage);
-    addAnimationOpenModal(() => openPopup(popupPicture), popupPicture, 'popup_closing-delay');
+    openPopup(popupPicture);
     const cardTarget = event.target.closest('.card');
     const nameImg = cardTarget.querySelector('.card__name');
     figcaptionPopup.textContent = nameImg.innerHTML;
     imgPopup.setAttribute('alt', nameImg.innerHTML);
 }
 
-const renderInitialCards = (card) => {
-    const templateCardContent = templateCard.cloneNode(true);
-    const nameCard = templateCardContent.querySelector('.card__name');
-    nameCard.textContent = card.name;
-    const pictureCard = templateCardContent.querySelector('.card__mask');
-    pictureCard.setAttribute('src', card.link);
-    pictureCard.setAttribute('alt', card.name);
-    cardViewport.prepend(templateCardContent);
-
-    const buttonDeleteCardOnPage = cardViewport.querySelector('.card__delete');
+ const createCard = (card) => {
+     const templateCardContent = templateCard.cloneNode(true);
+     const nameCard = templateCardContent.querySelector('.card__name');
+     nameCard.textContent = card.name;
+     const pictureCard = templateCardContent.querySelector('.card__mask');
+     pictureCard.setAttribute('src', card.link);
+     pictureCard.setAttribute('alt', card.name);
+     const buttonDeleteCardOnPage = templateCardContent.querySelector('.card__delete');
     buttonDeleteCardOnPage.addEventListener('click', (event) => {
         event.target.closest('.card').remove();
     })
-    const buttonLikeCard = cardViewport.querySelector('.card__vector');
+     const buttonLikeCard = templateCardContent.querySelector('.card__vector');
     buttonLikeCard.addEventListener('click', (event) => {
         event.target.classList.toggle('card__vector_active');
     })
     pictureCard.addEventListener('click', (event) => openPicturePopup(event));
+     return templateCardContent;
+ }
 
-    buttonClosePopupPicture.addEventListener('click', () => {
-        addAnimationCloseModal(() => closePopup(popupPicture), popupPicture, 'popup_closing-delay');
-    })
-
-    buttonOpenPopupAddCard.addEventListener('click', openPopupAddCard);
-}
+ const renderInitialCard = (card) => {
+     cardViewport.prepend(card);
+ }
 
 const addCard = (event) => {
     event.preventDefault();
     const name = placeInputPopupAddCard.value;
     const link = linkInputPopupAddCard.value;
     const newCardOnPage = {name, link};
-    renderInitialCards(newCardOnPage);
-    addAnimationCloseModal(() => closePopup(popupAddCard), popupAddCard, 'popup_closing-delay');
+    const card = createCard(newCardOnPage)
+    renderInitialCard(card);
+    closePopup(popupAddCard);
 }
 
 const openPopupEditProfile = () => {
-    addAnimationOpenModal(() => openPopup(popupEditProfile), popupEditProfile, 'popup_closing-delay');
+    openPopup(popupEditProfile)
     nameInputPopupProfile.value = nameProfile.innerHTML;
     jobInputPopupProfile.value = jobProfile.innerHTML;
 }
@@ -100,23 +87,24 @@ const submitEditProfileForm = (event) => {
     event.preventDefault();
     nameProfile.textContent = nameInputPopupProfile.value;
     jobProfile.textContent = jobInputPopupProfile.value;
-    addAnimationCloseModal(() => closePopup(popupEditProfile), popupEditProfile, 'popup_closing-delay');
+    closePopup(popupEditProfile);
 }
 
 formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
-
 buttonCloseProfilePopup.addEventListener('click', () => {
-    addAnimationCloseModal(() => closePopup(popupEditProfile), popupEditProfile, 'popup_closing-delay');
+    closePopup(popupEditProfile);
 })
-
+buttonClosePopupPicture.addEventListener('click', () => {
+    closePopup(popupPicture)
+})
+buttonOpenPopupAddCard.addEventListener('click', openPopupAddCard);
 buttonEditProfile.addEventListener('click', openPopupEditProfile);
 formPopupAddCard.addEventListener('submit', addCard);
 buttonCloseCardPopup.addEventListener('click', () => {
-    addAnimationCloseModal(() => closePopup(popupAddCard), popupAddCard, 'popup_closing-delay');
+    closePopup(popupAddCard);
 })
 
-initialCard.forEach((item) => renderInitialCards(item));
-
+initialCard.map((item)=>createCard(item)).map((item) => renderInitialCard(item));
 
 
 
