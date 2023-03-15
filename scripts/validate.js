@@ -12,14 +12,14 @@ const showInputError = (errorTextElement, errorClass, input) => {
     input.classList.add('popup__input_invalid');
 }
 
-const hideInputError = (errorTextElement, errorClass, input) => {
+export const hideInputError = (errorTextElement, errorClass, input = null) => {
     errorTextElement.classList.remove(errorClass);
     errorTextElement.classList.remove('popup__input-error_all-field')
     errorTextElement.textContent = '';
-    input.classList.remove('popup__input_invalid')
+    input && input.classList.remove('popup__input_invalid')
 };
 
-export const checkInputValidity = (input, {inputErrorClass, errorClass}) => {
+const checkInputValidity = (input, {inputErrorClass, errorClass}) => {
     const errorTextElement = document.querySelector(`${inputErrorClass}${input.name}`)
     if (!input.validity.valid) {
         showInputError(errorTextElement, errorClass, input);
@@ -28,12 +28,12 @@ export const checkInputValidity = (input, {inputErrorClass, errorClass}) => {
     }
 };
 
-const disabledButton = (submitButton, inactiveButtonClass) => {
+export const disabledButton = (submitButton, inactiveButtonClass) => {
     submitButton.classList.add(inactiveButtonClass);
     submitButton.disabled = true;
 }
 
-const enableButton = (submitButton, inactiveButtonClass) => {
+export const enableButton = (submitButton, inactiveButtonClass) => {
     submitButton.classList.remove(inactiveButtonClass);
     submitButton.disabled = false;
 }

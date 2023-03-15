@@ -1,5 +1,5 @@
 import {initialCard, initObj} from './constants.js';
-import {toggleButtonState, enableValidation} from './validate.js'
+import {enableValidation, hideInputError, disabledButton, enableButton} from './validate.js'
 
 const buttonEditProfile = document.querySelector('.profile__button-edit');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
@@ -18,29 +18,31 @@ const imgPopup = popupPicture.querySelector('.picture-popup__img');
 const figcaptionPopup = popupPicture.querySelector('.picture-popup__figcaption');
 const cardViewport = document.querySelector('.element');
 const templateCard = cardViewport.querySelector('.template').content;
-const popupArray = document.querySelectorAll('.popup');
-const buttonClose = document.querySelectorAll('.popup__close-icon');
 
 const openPopup = (popup) => {
     const inputList = popup.querySelectorAll('.popup__input');
-    const errorTextElement = popup.querySelectorAll('.popup__input-error');
-    const popupButton = popup.querySelector('.popup__button')
+    const errorTextElementList = popup.querySelectorAll('.popup__input-error');
     popup.classList.add('popup_opened');
     inputList.forEach((input) => {
         input.textContent = '';
         input.classList.remove('popup__input_invalid');
     });
-    errorTextElement.forEach((item) => {
-        item.classList.remove('popup__input-error_visible');
+    errorTextElementList.forEach((errorTextElement) => {
+        hideInputError(errorTextElement, '.popup__input-error_visible')
     });
-    popupButton && toggleButtonState(popupButton, 'popup__button_disabled', inputList);
+    document.addEventListener('keydown', (event) => closePopupEsc(event, popup));
+    document.addEventListener('click', (event) => closePopupByOverlayAndCloseIcon(event, popup));
 }
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', (event) => closePopupEsc(event, popup));
+    document.removeEventListener('click', (event) => closePopupByOverlayAndCloseIcon(event, popup));
 }
 
 const openPopupAddCard = () => {
+    const submitButton = popupAddCard.querySelector('.popup__button');
+    disabledButton(submitButton, 'popup__button_disabled')
     formPopupAddCard.reset();
     openPopup(popupAddCard);
 }
@@ -62,6 +64,15 @@ const createCard = (card) => {
     const pictureCard = templateCardContent.querySelector('.card__mask');
     pictureCard.setAttribute('src', card.link);
     pictureCard.setAttribute('alt', card.name);
+    const buttonDeleteCardOnPage = templateCardContent.querySelector('.card__delete');
+    buttonDeleteCardOnPage.addEventListener('click', (event) => {
+        event.target.closest('.card').remove();
+    })
+    const buttonLikeCard = templateCardContent.querySelector('.card__vector');
+    buttonLikeCard.addEventListener('click', (event) => {
+        event.target.classList.toggle('card__vector_active');
+    })
+    pictureCard.addEventListener('click', (event) => openPicturePopup(event));
     return templateCardContent;
 }
 
@@ -74,15 +85,17 @@ const addCard = (event) => {
     const name = placeInputPopupAddCard.value;
     const link = linkInputPopupAddCard.value;
     const newCardOnPage = {name, link};
-    const card = createCard(newCardOnPage)
+    const card = createCard(newCardOnPage);
     renderInitialCard(card);
     closePopup(popupAddCard);
 }
 
 const openPopupEditProfile = () => {
-    nameInputPopupProfile.value = nameProfile.innerHTML;
-    jobInputPopupProfile.value = jobProfile.innerHTML;
-    openPopup(popupEditProfile)
+    const submitButton = popupEditProfile.querySelector('.popup__button');
+    enableButton(submitButton, 'popup__button_disabled')
+    nameInputPopupProfile.value = nameProfile.textContent;
+    jobInputPopupProfile.value = jobProfile.textContent;
+    openPopup(popupEditProfile);
 }
 
 const submitEditProfileForm = (event) => {
@@ -94,45 +107,27 @@ const submitEditProfileForm = (event) => {
 
 formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
 
-buttonClose.forEach((button) => {
-    const popup = button.closest('.popup');
-    button.addEventListener('click', () => closePopup(popup))
-})
 buttonOpenPopupAddCard.addEventListener('click', openPopupAddCard);
 
 buttonEditProfile.addEventListener('click', openPopupEditProfile);
 
 formPopupAddCard.addEventListener('submit', addCard);
 
-document.addEventListener('keydown', (event) => {
-    popupArray.forEach((popup) => {
-        if (event.key === 'Escape') {
-            closePopup(popup)
-        }
-    })
-})
+formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
 
-cardViewport.addEventListener('click', (event) => {
-    if (event.target.classList.contains('card__vector')) {
-        event.target.classList.toggle('card__vector_active');
+const closePopupEsc = (event, popup) => {
+    if (event.key === 'Escape') {
+        closePopup(popup)
     }
-    if (event.target.classList.contains('card__delete')) {
-        event.target.closest('.card').remove();
-    }
-    if (event.target.classList.contains('card__mask')) {
-        openPicturePopup(event)
-    }
-})
+}
 
-document.addEventListener('click', (event) => {
-    popupArray.forEach((popup) => {
-        if (event.target.classList.contains('popup')) {
-            closePopup(popup)
-        }
-    })
-})
+const closePopupByOverlayAndCloseIcon = (event, popup) => {
+    if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close-icon')) {
+        closePopup(popup)
+    }
+}
 
-initialCard.map((item) => createCard(item)).map((item) => renderInitialCard(item));
+initialCard.map((item) => createCard(item)).forEach((item) => renderInitialCard(item));
 
 enableValidation(initObj);
 
