@@ -12,11 +12,14 @@ const showInputError = (errorTextElement, errorClass, input) => {
     input.classList.add('popup__input_invalid');
 }
 
-export const hideInputError = (errorTextElement, errorClass, input = null) => {
+export const hideInputError = (errorTextElement, errorClass, inputList) => {
     errorTextElement.classList.remove(errorClass);
     errorTextElement.classList.remove('popup__input-error_all-field')
     errorTextElement.textContent = '';
-    input && input.classList.remove('popup__input_invalid')
+    inputList.forEach((input) => {
+        input.textContent = '';
+        input.classList.remove('popup__input_invalid');
+    });
 };
 
 const checkInputValidity = (input, {inputErrorClass, errorClass}) => {
@@ -24,7 +27,7 @@ const checkInputValidity = (input, {inputErrorClass, errorClass}) => {
     if (!input.validity.valid) {
         showInputError(errorTextElement, errorClass, input);
     } else {
-        hideInputError(errorTextElement, errorClass, input);
+        hideInputError(errorTextElement, errorClass, [input]);
     }
 };
 

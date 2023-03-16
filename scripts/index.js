@@ -18,26 +18,23 @@ const imgPopup = popupPicture.querySelector('.picture-popup__img');
 const figcaptionPopup = popupPicture.querySelector('.picture-popup__figcaption');
 const cardViewport = document.querySelector('.element');
 const templateCard = cardViewport.querySelector('.template').content;
+const popups = Array.from(document.querySelectorAll('.popup'));
 
 const openPopup = (popup) => {
     const inputList = popup.querySelectorAll('.popup__input');
-    const errorTextElementList = popup.querySelectorAll('.popup__input-error');
+    const errorTextElementList = popup.querySelectorAll('.popup__input-error_visible');
     popup.classList.add('popup_opened');
-    inputList.forEach((input) => {
-        input.textContent = '';
-        input.classList.remove('popup__input_invalid');
-    });
-    errorTextElementList.forEach((errorTextElement) => {
-        hideInputError(errorTextElement, '.popup__input-error_visible')
-    });
+    if (errorTextElementList.length > 0) {
+        errorTextElementList.forEach((errorTextElement) => {
+            hideInputError(errorTextElement, 'popup__input-error_visible', inputList)
+        });
+    }
     document.addEventListener('keydown', (event) => closePopupEsc(event, popup));
-    document.addEventListener('click', (event) => closePopupByOverlayAndCloseIcon(event, popup));
 }
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', (event) => closePopupEsc(event, popup));
-    document.removeEventListener('click', (event) => closePopupByOverlayAndCloseIcon(event, popup));
 }
 
 const openPopupAddCard = () => {
@@ -105,16 +102,6 @@ const submitEditProfileForm = (event) => {
     closePopup(popupEditProfile);
 }
 
-formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
-
-buttonOpenPopupAddCard.addEventListener('click', openPopupAddCard);
-
-buttonEditProfile.addEventListener('click', openPopupEditProfile);
-
-formPopupAddCard.addEventListener('submit', addCard);
-
-formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
-
 const closePopupEsc = (event, popup) => {
     if (event.key === 'Escape') {
         closePopup(popup)
@@ -126,6 +113,20 @@ const closePopupByOverlayAndCloseIcon = (event, popup) => {
         closePopup(popup)
     }
 }
+
+formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
+
+buttonOpenPopupAddCard.addEventListener('click', openPopupAddCard);
+
+buttonEditProfile.addEventListener('click', openPopupEditProfile);
+
+formPopupAddCard.addEventListener('submit', addCard);
+
+formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
+
+popups.forEach((popup) => {
+    popup.addEventListener('click', (evt) => closePopupByOverlayAndCloseIcon(evt, popup))
+})
 
 initialCard.map((item) => createCard(item)).forEach((item) => renderInitialCard(item));
 
