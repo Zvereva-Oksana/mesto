@@ -21,14 +21,7 @@ const templateCard = cardViewport.querySelector('.template').content;
 const popups = Array.from(document.querySelectorAll('.popup'));
 
 const openPopup = (popup) => {
-    const inputList = popup.querySelectorAll('.popup__input');
-    const errorTextElementList = popup.querySelectorAll('.popup__input-error_visible');
     popup.classList.add('popup_opened');
-    if (errorTextElementList.length > 0) {
-        errorTextElementList.forEach((errorTextElement) => {
-            hideInputError(errorTextElement, 'popup__input-error_visible', inputList)
-        });
-    }
     document.addEventListener('keydown', (event) => closePopupEsc(event, popup));
 }
 
@@ -41,6 +34,7 @@ const openPopupAddCard = () => {
     const submitButton = popupAddCard.querySelector('.popup__button');
     disabledButton(submitButton, 'popup__button_disabled')
     formPopupAddCard.reset();
+    clearErrorsMessage(popupAddCard);
     openPopup(popupAddCard);
 }
 
@@ -87,11 +81,22 @@ const addCard = (event) => {
     closePopup(popupAddCard);
 }
 
+const clearErrorsMessage = (popup) => {
+    const inputList = popup.querySelectorAll('.popup__input');
+    const errorTextElementList = popup.querySelectorAll('.popup__input-error_visible');
+    if (errorTextElementList.length > 0) {
+        errorTextElementList.forEach((errorTextElement) => {
+            hideInputError(errorTextElement, 'popup__input-error_visible', inputList)
+        });
+    }
+}
+
 const openPopupEditProfile = () => {
     const submitButton = popupEditProfile.querySelector('.popup__button');
     enableButton(submitButton, 'popup__button_disabled')
     nameInputPopupProfile.value = nameProfile.textContent;
     jobInputPopupProfile.value = jobProfile.textContent;
+    clearErrorsMessage(popupEditProfile);
     openPopup(popupEditProfile);
 }
 
