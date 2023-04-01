@@ -8,52 +8,49 @@ export default class FormValidator {
 
     enableValidation() {
         this._setEventListener();
-        this._clearErrorsMessage();
     }
 
-    _clearErrorsMessage() {
-        const errorTextElementList = this._form.querySelectorAll('.popup__input-error_visible');
-        if (errorTextElementList.length > 0) {
-            this._inputList.forEach(input => {
-                this._hideInputError(input);
-            })
-        }
+    setInitialStateForm() {
+        this._toggleButtonState()
+        this._inputList.forEach(inputElement => {
+            this._hideInputError(inputElement);
+        })
     }
 
-    _showInputError(input) {
-        const errorTextElement = this._form.querySelector(`${this._initObj.inputErrorClass}${input.name}`);
-        if (input.value.length === 0) {
+    _showInputError(inputElement) {
+        const errorTextElement = this._form.querySelector(`${this._initObj.inputErrorClass}${inputElement.name}`);
+        if (inputElement.value.length === 0) {
             errorTextElement.textContent = 'Вы пропустили это поле.';
-            errorTextElement.classList.remove('popup__input-error_all-field')
-        } else if (input.value.length > 0 && input.type === 'url') {
+            errorTextElement.classList.remove(this._initObj.errorField);
+        } else if (inputElement.value.length > 0 && inputElement.type === 'url') {
             errorTextElement.textContent = 'Введите адрес сайта.'
         } else {
-            errorTextElement.textContent = `Минимальное количество символов ${input.minLength}. Длина текста сейчас: ${input.value.length} символ.`;
-            errorTextElement.classList.add('popup__input-error_all-field')
+            errorTextElement.textContent = `Минимальное количество символов ${inputElement.minLength}. Длина текста сейчас: ${inputElement.value.length} символ.`;
+            errorTextElement.classList.add(this._initObj.errorField);
         }
         errorTextElement.classList.add(this._initObj.errorClass);
-        input.classList.add('popup__input_invalid');
+        inputElement.classList.add(this._initObj.underlineMisspelledField);
     }
 
-    _hideInputError(input) {
-        const errorTextElement = document.querySelector(`${this._initObj.inputErrorClass}${input.name}`)
+    _hideInputError(inputElement) {
+        const errorTextElement = document.querySelector(`${this._initObj.inputErrorClass}${inputElement.name}`)
         errorTextElement.classList.remove(this._initObj.errorClass);
-        errorTextElement.classList.remove('popup__input-error_all-field')
+        errorTextElement.classList.remove(this._initObj.errorField)
         errorTextElement.textContent = '';
-        input.classList.remove('popup__input_invalid');
+        inputElement.classList.remove(this._initObj.underlineMisspelledField);
     }
 
-    _checkInputValidity(input) {
-        if (!input.validity.valid) {
-            this._showInputError(input);
+    _checkInputValidity(inputElement) {
+        if (!inputElement.validity.valid) {
+            this._showInputError(inputElement);
         } else {
-            this._hideInputError(input);
+            this._hideInputError(inputElement);
         }
     }
 
     _hasInvalidInput() {
-        return this._inputList.some((input) => {
-            return !input.validity.valid;
+        return this._inputList.some((inputElement) => {
+            return !inputElement.validity.valid;
         })
     }
 
@@ -61,13 +58,12 @@ export default class FormValidator {
         this._form.addEventListener('submit', (event) => {
             event.preventDefault();
         });
-        this._inputList.forEach((input) => {
-            input.addEventListener('input', (event) => {
-                this._checkInputValidity(input);
+        this._inputList.forEach((inputElement) => {
+            inputElement.addEventListener('input', (event) => {
+                this._checkInputValidity(inputElement);
                 this._toggleButtonState();
             })
         })
-        this._toggleButtonState();
     }
 
     _toggleButtonState() {
