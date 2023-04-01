@@ -16,49 +16,68 @@ const linkInputPopupAddCard = formPopupAddCard.querySelector('.popup__input_type
 const buttonOpenPopupAddCard = document.querySelector('.profile__button-add');
 const cardViewport = document.querySelector('.element');
 const popups = Array.from(document.querySelectorAll('.popup'));
-const formPopupEditProfileValidator = new FormValidator(initObj, formPopupEditProfile);
-const formPopupAddCardValidator = new FormValidator(initObj, formPopupAddCard);
+const popupPicture = document.querySelector('.picture-popup');
+const screensaverPopupPicture = popupPicture.querySelector('.picture-popup__img');
 
-export const openPopup = (popup) => {
+const formPopupEditProfileValidator = new FormValidator(initObj, formPopupEditProfile);
+formPopupEditProfileValidator.enableValidation();
+
+const formPopupAddCardValidator = new FormValidator(initObj, formPopupAddCard);
+formPopupAddCardValidator.enableValidation();
+
+const template = '.template';
+
+const openPopup = (popup) => {
     popup.classList.add('popup_opened');
-    document.addEventListener('keydown', (event) => closePopupEsc(event, popup));
+    document.addEventListener('keydown', closePopupEsc);
 }
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', (event) => closePopupEsc(event, popup));
+    document.removeEventListener('keydown', closePopupEsc);
 }
 
 const openPopupAddCard = () => {
     formPopupAddCard.reset();
+    formPopupAddCardValidator.setInitialStateForm()
     openPopup(popupAddCard);
-    formPopupAddCardValidator.enableValidation();
 }
 
-initialCard.forEach(({name, link}) => {
-    const card = new Card(name, link);
-    const cardElement = card.generateCard();
-    cardViewport.append(cardElement);
+const createCard = (cardInfo) => {
+    const card = new Card(cardInfo, template);
+    return card.generateCard();
+}
+
+initialCard.forEach((card) => {
+    cardViewport.append(createCard(card));
 });
 
-const renderInitialCard = (card) => {
-    cardViewport.prepend(card);
+const renderNewCard = (cardElement) => {
+    cardViewport.prepend(cardElement);
 }
 
 const addCard = (event) => {
     event.preventDefault();
-    const name = placeInputPopupAddCard.value;
-    const link = linkInputPopupAddCard.value;
-    const card = new Card(name, link).generateCard();
-    renderInitialCard(card);
+    const cardInfo = {
+        name: placeInputPopupAddCard.value,
+        link: linkInputPopupAddCard.value
+    }
+    renderNewCard(createCard(cardInfo));
     closePopup(popupAddCard);
+}
+
+export const handleOpenPopup = (imgLink, imgName) => {
+    screensaverPopupPicture.src = imgLink;
+    screensaverPopupPicture.alt = imgName;
+    popupPicture.querySelector('.picture-popup__figcaption').textContent = imgName;
+    openPopup(popupPicture);
 }
 
 const openPopupEditProfile = () => {
     nameInputPopupProfile.value = nameProfile.textContent;
     jobInputPopupProfile.value = jobProfile.textContent;
+    formPopupEditProfileValidator.setInitialStateForm();
     openPopup(popupEditProfile);
-    formPopupEditProfileValidator.enableValidation();
 }
 
 const submitEditProfileForm = (event) => {
@@ -68,9 +87,10 @@ const submitEditProfileForm = (event) => {
     closePopup(popupEditProfile);
 }
 
-const closePopupEsc = (event, popup) => {
+const closePopupEsc = (event) => {
     if (event.key === 'Escape') {
-        closePopup(popup)
+        const openedPopup = document.querySelector('.popup_opened');
+        closePopup(openedPopup);
     }
 }
 
