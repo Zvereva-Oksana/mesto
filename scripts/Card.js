@@ -17,7 +17,7 @@ export default class Card {
     }
 
     _handleLikeClick() {
-        this._element.querySelector('.card__vector').classList.toggle('card__vector_active');
+        this._likeButton.classList.toggle('card__vector_active');
     }
 
     _setEventListeners() {

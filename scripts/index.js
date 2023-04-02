@@ -108,8 +108,6 @@ buttonEditProfile.addEventListener('click', openPopupEditProfile);
 
 formPopupAddCard.addEventListener('submit', addCard);
 
-formPopupEditProfile.addEventListener('submit', (event) => submitEditProfileForm(event));
-
 popups.forEach((popup) => {
     popup.addEventListener('click', (evt) => closePopupByOverlayAndCloseIcon(evt, popup))
 })

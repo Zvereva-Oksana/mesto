@@ -19,14 +19,11 @@ export default class FormValidator {
 
     _showInputError(inputElement) {
         const errorTextElement = this._form.querySelector(`${this._initObj.inputErrorClass}${inputElement.name}`);
-        if (inputElement.value.length === 0) {
-            errorTextElement.textContent = 'Вы пропустили это поле.';
-            errorTextElement.classList.remove(this._initObj.errorField);
-        } else if (inputElement.value.length > 0 && inputElement.type === 'url') {
-            errorTextElement.textContent = 'Введите адрес сайта.'
-        } else {
-            errorTextElement.textContent = `Минимальное количество символов ${inputElement.minLength}. Длина текста сейчас: ${inputElement.value.length} символ.`;
+        errorTextElement.textContent = inputElement.validationMessage;
+        if (errorTextElement.textContent.length > 35) {
             errorTextElement.classList.add(this._initObj.errorField);
+        } else {
+            errorTextElement.classList.remove(this._initObj.errorField);
         }
         errorTextElement.classList.add(this._initObj.errorClass);
         inputElement.classList.add(this._initObj.underlineMisspelledField);
@@ -55,9 +52,6 @@ export default class FormValidator {
     }
 
     _setEventListener() {
-        this._form.addEventListener('submit', (event) => {
-            event.preventDefault();
-        });
         this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', (event) => {
                 this._checkInputValidity(inputElement);
@@ -67,7 +61,7 @@ export default class FormValidator {
     }
 
     _toggleButtonState() {
-        if (this._hasInvalidInput(this._inputList)) {
+        if (this._hasInvalidInput()) {
             this._buttonElement.classList.add(this._initObj.inactiveButtonClass);
             this._buttonElement.disabled = true;
         } else {
