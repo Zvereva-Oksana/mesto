@@ -34,7 +34,7 @@ editProfilePopup.setEventListeners();
 
 const createCard = (cardInfo) => {
     const card = new Card(cardInfo, template, () =>
-        popupPicture.open(cardInfo.name, cardInfo.link))
+        popupPicture.open(cardInfo.name, cardInfo.link));
     return card.generateCard();
 }
 
