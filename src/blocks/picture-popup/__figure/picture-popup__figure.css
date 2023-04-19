@@ -12,4 +12,5 @@
     margin: 0;
     object-fit: contain;
     box-sizing: border-box;
+    width: fit-content;
 }

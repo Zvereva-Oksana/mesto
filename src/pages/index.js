@@ -1,5 +1,5 @@
 import './index.css';
-import {initialCard, initObj} from '../components/constants.js';
+import {initialCard, initObj} from '../utils/constants.js';
 import Card from "../components/Card.js";
 import FormValidator from '../components/FormValidator.js'
 import Section from "../components/Section.js";
@@ -12,10 +12,7 @@ const buttonOpenEditProfile = document.querySelector('.profile__button-edit');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const formPopupEditProfile = popupEditProfile.querySelector('.popup__form_edit-profile');
 const formPopupAddCard = document.querySelector('.popup__form_add-card');
-const placeInputPopupAddCard = formPopupAddCard.querySelector('.popup__input_type_place');
-const linkInputPopupAddCard = formPopupAddCard.querySelector('.popup__input_type_link');
 const buttonOpenPopupAddCard = document.querySelector('.profile__button-add');
-const cardViewport = document.querySelector('.element');
 const cardListSelector = '.element';
 const template = '.template';
 const nameSelector = '.profile__name';
@@ -38,27 +35,23 @@ const createCard = (cardInfo) => {
     return card.generateCard();
 }
 
-const renderCardOnPage = new Section({
-    items: initialCard, renderer: (item) => {
+const cardsList = new Section({
+    renderer: (item) => {
         const cardElement = createCard(item, template);
-        renderCardOnPage.addItem(cardElement)
+        cardsList.addItem(cardElement)
     }
 }, cardListSelector)
-renderCardOnPage.renderer()
 
-const renderNewCard = (cardElement) => {
-    cardViewport.prepend(cardElement);
-}
+cardsList.renderItems(initialCard);
 
-const addCard = (event) => {
+const popupWithFormAddCard = new PopupWithForm('.popup_add-card', (event, data) => {
     event.preventDefault();
-    const cardInfo = {
-        name: placeInputPopupAddCard.value,
-        link: linkInputPopupAddCard.value
-    }
-    renderNewCard(createCard(cardInfo));
-    popupAddCard.close();
-}
+    const obj = {...data, name: data.place};
+    cardsList.addItem(createCard(obj))
+    popupWithFormAddCard.close();
+});
+
+popupWithFormAddCard.setEventListeners()
 
 const openPopupAddCard = () => {
     formPopupAddCard.reset();
@@ -66,10 +59,9 @@ const openPopupAddCard = () => {
     popupAddCard.open();
 }
 
-const popupWithFormEditProfile = new PopupWithForm('.popup_edit-profile', (event) => {
+const popupWithFormEditProfile = new PopupWithForm('.popup_edit-profile', (event, {name, job}) => {
     event.preventDefault();
-    const formValues = popupWithFormEditProfile.getFormValues();
-    userInfo.setUserInfo({userName: formValues.name, userJob: formValues.job});
+    userInfo.setUserInfo({userName: name, userJob: job});
     popupWithFormEditProfile.close();
 });
 
@@ -86,5 +78,4 @@ buttonOpenEditProfile.addEventListener('click', () => {
     editProfilePopup.open()
 });
 
-formPopupAddCard.addEventListener('submit', addCard);
 
