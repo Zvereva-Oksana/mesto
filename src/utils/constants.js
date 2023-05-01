@@ -6,5 +6,5 @@ export const initObj = {
     inputErrorClass: '.popup__input-error_type_',
     errorClass: 'popup__input-error_visible',
     errorField: 'popup__input-error_all-field',
-    underlineMisspelledField: 'popup__input_invalid',
+    underlineMisspelledField: 'popup__input_invalid'
 }
