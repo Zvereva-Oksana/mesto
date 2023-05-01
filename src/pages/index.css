@@ -18,6 +18,8 @@
 @import url(../blocks/card/__wrapper/card__wrapper.css);
 @import url(../blocks/card/__name/card__name.css);
 @import url(../blocks/card/__vector/card__vector.css);
+@import url(../blocks/card/__likes/card__likes.css);
+@import url(../blocks/card/__like-wrapper/card__like-wrapper.css);
 @import url(../blocks/card/__vector/_active/card__vector_active.css);
 @import url(../blocks/card/__delete/card__delete.css);
 @import url(../blocks/footer/footer.css);
@@ -27,11 +29,13 @@
 @import url(../blocks/popup/_close/popup_close.css);
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__heading/popup__heading.css);
+@import url(../blocks/popup/__heading/_consent-deletion/popup__heading_consent-deletion.css);
 @import url(../blocks/popup/__input-container/popup__input-container.css);
 @import url(../blocks/popup/__input/popup__input.css);
 @import url(../blocks/popup/__input/_invalid/popup__input_invalid.css);
 @import url(../blocks/popup/__button/popup__button.css);
 @import url(../blocks/popup/__button/_disabled/popup__button_disabled.css);
+@import url(../blocks/popup/__button/_consent-deletion/popup__button_consent-deletion.css);
 @import url(../blocks/popup/__close-icon/popup__close-icon.css);
 @import url(../blocks/popup/__input-error/popup__input-error.css);
 @import url(../blocks/popup/__input-error/_visible/popup__input-error_visible.css);
