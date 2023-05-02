@@ -18,7 +18,7 @@
 .card__wrapper{align-items:center;border:none;display:flex;justify-content:space-between;margin:22px 20px;width:242px}
 .card__name{color:#000;font-size:24px;font-weight:900;line-height:29px;margin:0;max-width:185px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .card__vector{background-color:transparent;background-image:url(87ed371465c7a6a1cd01.svg);background-repeat:no-repeat;background-size:22px 19px;border:none;content:"";cursor:pointer;display:inline-block;height:19px;width:22px}.card__vector:hover{opacity:.5}
-.card__likes{color:#000;font-size:13px;font-style:normal;font-weight:400;line-height:16px;padding-top:3px;text-align:center}
+.card__count-likes{color:#000;font-size:13px;font-style:normal;font-weight:400;line-height:16px;padding-top:3px;text-align:center}
 .card__like-wrapper{display:flex;flex-direction:column}
 .card__vector_active{background-image:url(fe17a515669479b1e649.svg)}
 .card__delete{background-color:hsla(0,0%,100%,0);background-image:url(823b0cf1b0b7e9cb7cad.svg);background-repeat:no-repeat;background-size:18px 19px;border:none;cursor:pointer;height:19px;left:244px;position:absolute;top:20px;width:18px}.card__delete:hover{opacity:.6}
