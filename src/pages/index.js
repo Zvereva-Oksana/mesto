@@ -128,7 +128,7 @@ const popupWithFormEditProfile = new PopupWithForm('.popup_edit-profile', (event
     })
 });
 popupWithFormEditProfile.setEventListeners();
-buttonOpenEditProfile.addEventListener('click', (data) => {
+buttonOpenEditProfile.addEventListener('click', () => {
     const userInfoData = userInfo.getUserInfo();
     const profileForm = popupWithFormEditProfile.getFormElement();
     profileForm.elements.name.value = userInfoData.userName;
@@ -144,7 +144,7 @@ const popupWithFormEditAvatar = new PopupWithForm('.popup_edit-avatar', (event, 
         popupWithFormEditAvatar.close();
         userInfo.setUserAvatar(avatar);
     }).finally(() => {
-        setTimeout(() => popupWithFormEditProfile.renderLoading(false), 500)
+        setTimeout(() => popupWithFormEditAvatar.renderLoading(false), 500)
     })
 });
 popupWithFormEditAvatar.setEventListeners();
