@@ -1,20 +1,20 @@
 export default class Card {
-    constructor(data, template, handleOpenPopupPicture, userId, handleRemoveCard, addLikeFetch, removeLikeFetch) {
+    constructor(data, template, openPopupPicture, userId, removeCard, addLikeFetch, removeLikeFetch) {
         this._name = data.name;
         this._id = data['_id'];
         this._link = data.link;
         this._ownerId = data.owner['_id'];
         this._userId = userId;
-        this._numberLikes = data.likes || [];
+        this._countLikes = data.likes;
         this._template = template;
-        this._handleOpenPopupPicture = handleOpenPopupPicture;
-        this._handleRemoveCard = handleRemoveCard;
+        this._openPopupPicture = openPopupPicture;
+        this._removeCard = removeCard;
         this._addLikeFetch = addLikeFetch;
         this._removeLikeFetch = removeLikeFetch;
     }
 
-    initLike(data) {
-        this._numberLikes = data.likes || [];
+    setCountLikes(data) {
+        this._countLikes = data.likes || [];
     }
 
     _getTemplate() {
@@ -29,20 +29,20 @@ export default class Card {
         }
     }
 
-    setLike() {
+    addLikeOnCard() {
         this._likeButton.classList.add('card__vector_active');
     }
 
-    deleteLike() {
+    removeLikeOnCard() {
         this._likeButton.classList.remove('card__vector_active');
     }
 
-    likesNumber(data) {
-        this._numberLikesOnCard.textContent = data.likes.length;
+    renderCountLikesByCard(data) {
+        this._cardElementToDisplayCountOfLikes.textContent = data.likes.length;
     }
 
     _checkUserLike() {
-        return this._numberLikes.some((item) => item._id === this._userId);
+        return this._countLikes.some((item) => item._id === this._userId);
     }
 
     _setEventListeners() {
@@ -50,9 +50,9 @@ export default class Card {
             this._toggleLikeClick();
         });
         this._element.querySelector('.card__delete').addEventListener('click', (evt) => {
-            this._handleRemoveCard(evt);
+            this._removeCard(evt);
         });
-        this._cardImage.addEventListener('click', () => this._handleOpenPopupPicture());
+        this._cardImage.addEventListener('click', () => this._openPopupPicture());
     }
 
     getCardId() {
@@ -66,12 +66,11 @@ export default class Card {
         if (this._checkUserLike()) {
             this._likeButton.classList.add('card__vector_active');
         }
-        this._numberLikesOnCard = this._element.querySelector('.card__likes');
-        this._number = this._element.querySelector('.card__likes');
+        this._cardElementToDisplayCountOfLikes = this._element.querySelector('.card__count-likes');
         this._buttonDelete = this._element.querySelector('.card__delete');
         this._cardImage.src = this._link;
         this._cardImage.alt = this._name;
-        this._number.textContent = this._numberLikes.length;
+        this._cardElementToDisplayCountOfLikes.textContent = this._countLikes.length;
         this._element.querySelector('.card__name').textContent = this._name;
         this._element.id = this._id;
         this._setEventListeners();
