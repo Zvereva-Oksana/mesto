@@ -11,17 +11,12 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
     }
 
-    _checkErr(err) {
-        console.log(err);
-    }
-
     getUserInfo() {
         const Url = `${this._baseUrl}/users/me`;
         return fetch(Url, {
             headers: this._headers
         })
             .then(this._checkRes)
-            .catch(this._checkErr)
     }
 
     getInitialCards() {
@@ -30,7 +25,6 @@ export default class Api {
             headers: this._headers
         })
             .then(this._checkRes)
-            .catch(this._checkErr)
     }
 
     addNewCard(cardData) {
@@ -41,7 +35,6 @@ export default class Api {
             body: JSON.stringify(cardData)
         })
             .then(this._checkRes)
-            .catch(this._checkErr)
     }
 
     addInfoUser(infoData) {
@@ -52,7 +45,6 @@ export default class Api {
             body: JSON.stringify(infoData)
         })
             .then(this._checkRes)
-            .catch(this._checkErr)
     }
 
     deleteCard(cardId) {
@@ -62,7 +54,6 @@ export default class Api {
             headers: this._headers,
         })
             .then(this._checkRes)
-            .catch(this._checkErr)
     }
 
     addLikeCard(cardId) {
@@ -72,7 +63,6 @@ export default class Api {
             headers: this._headers,
         })
             .then(this._checkRes)
-            .catch(this._checkErr)
     }
 
     deleteLikeCard(cardId) {
@@ -82,7 +72,6 @@ export default class Api {
             headers: this._headers,
         })
             .then(this._checkRes)
-            .catch(this._checkErr)
     }
 
     editUserAvatar(avatar) {
@@ -93,7 +82,6 @@ export default class Api {
             body: JSON.stringify(avatar)
         })
             .then(this._checkRes)
-            .catch(this._checkErr)
     }
 }
 

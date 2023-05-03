@@ -68,8 +68,10 @@ const createCard = (cardInfo) => {
                 api.deleteCard(cardId).then(() => {
                     cardElement.remove();
                     popupDeleteCard.close();
+                }).catch((err) => {
+                    console.log(err)
                 })
-            });
+            })
         },
         () => {
             const cardId = card.getCardId();
@@ -77,6 +79,8 @@ const createCard = (cardInfo) => {
                 card.setCountLikes(data)
                 card.renderCountLikesByCard(data)
                 card.addLikeOnCard()
+            }).catch((err) => {
+                console.log(err)
             })
         },
         () => {
@@ -85,6 +89,8 @@ const createCard = (cardInfo) => {
                 card.renderCountLikesByCard(data)
                 card.setCountLikes(data)
                 card.removeLikeOnCard()
+            }).catch((err) => {
+                console.log(err)
             })
         })
     return card.generateCard();
@@ -104,6 +110,8 @@ const popupWithFormAddCard = new PopupWithForm('.popup_add-card',
         api.addNewCard(cardData).then((cardInfo) => {
             cardsList.addCard(createCard(cardInfo))
             popupWithFormAddCard.close();
+        }).catch((err) => {
+            console.log(err)
         }).finally(() => {
             setTimeout(() => popupWithFormAddCard.renderLoading(false), 500)
         })
@@ -123,6 +131,8 @@ const popupWithFormEditProfile = new PopupWithForm('.popup_edit-profile', (event
     api.addInfoUser({name: userFormValue.name, about: userFormValue.job}).then((data) => {
         userInfo.setUserInfo({userName: data.name, userJob: data.about});
         popupWithFormEditProfile.close();
+    }).catch((err) => {
+        console.log(err)
     }).finally(() => {
         setTimeout(() => popupWithFormEditProfile.renderLoading(false), 500)
     })
@@ -143,6 +153,8 @@ const popupWithFormEditAvatar = new PopupWithForm('.popup_edit-avatar', (event, 
     api.editUserAvatar(valueForm).then(({avatar}) => {
         popupWithFormEditAvatar.close();
         userInfo.setUserAvatar(avatar);
+    }).catch((err) => {
+        console.log(err)
     }).finally(() => {
         setTimeout(() => popupWithFormEditAvatar.renderLoading(false), 500)
     })
